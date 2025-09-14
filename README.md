@@ -2,45 +2,57 @@
 # 📊 Credit Risk Prediction in P2P Lending
 
 ## 📄 Overview
-This project implements a machine learning framework for **credit risk prediction** in Peer-to-Peer (P2P) lending. Using the **Bondora loan dataset (2012–2016)**, the system predicts whether a borrower is likely to **default** or **repay**.  
-The model assists lenders in making **data-driven lending decisions** and minimizing risk.
+This project focuses on predicting **credit risk in Peer-to-Peer (P2P) lending** using machine learning techniques.  
+It uses the **Bondora loan dataset (2012–2016)** to classify whether a borrower is likely to **default** or **repay**.  
+The aim is to help investors and lending platforms make better data-driven decisions.
 
 ---
 
 ## ⚙ Features
-- **Data Preprocessing**: Cleaning, handling missing values, encoding categorical features.
-- **Class Imbalance Handling**: Applied oversampling & undersampling techniques to balance default vs. non-default loans.
-- **Feature Selection**: Hybrid approach using model-based feature importance and SHAP explainability.
-- **Model Training**: Comparative analysis of multiple ML models.
-- **Evaluation Metrics**: Accuracy, Precision, Recall, F1-score, AUC-ROC.
+- Cleaned and preprocessed raw loan data.  
+- Applied **class balancing** (oversampling/undersampling).  
+- Hybrid feature selection (SHAP + model feature importance).  
+- Compared multiple ML models (XGBoost, LightGBM, CatBoost, Random Forest).  
+- Generated **AUC curves, confusion matrices, and feature importance tables**.  
+- Summarized results in **evaluation metrics tables**.
 
 ---
 
-## 🛠 Technologies Used
-- **Languages**: Python  
-- **Libraries**: Pandas, NumPy, Scikit-learn, XGBoost, LightGBM, CatBoost, Matplotlib, SHAP  
-- **Tools**: Jupyter Notebook, Google Colab  
+## 🛠 Technologies
+- **Language**: Python 3.9+  
+- **Libraries**:  
+  - Data: Pandas, NumPy  
+  - ML Models: Scikit-learn, XGBoost, LightGBM, CatBoost  
+  - Visualization: Matplotlib, Seaborn, SHAP  
+- **Tools**: Jupyter Notebook, VS Code  
 
 ---
 
-## 📁 Project Structure
+## 📁 Folder Structure
 ```
 
-Credit\_Risk\_Prediction/
+Credit-Risk-Prediction/
 │
-├── data/                 # Dataset files (Bondora loan dataset)
-├── notebooks/            # Jupyter Notebooks for each stage
-│   ├── 1\_data\_preprocessing.ipynb
-│   ├── 2\_feature\_engineering.ipynb
-│   ├── 3\_model\_training.ipynb
-│   └── 4\_evaluation.ipynb
-├── src/                  # Source code scripts
-│   ├── preprocessing.py
-│   ├── models.py
-│   ├── utils.py
-│   └── feature\_selection.py
-├── results/              # Evaluation results, plots, SHAP explainability graphs
-└── README.md             # Project documentation
+├── data/                        # Raw / preprocessed datasets
+│
+├── outputs/                     # Results & evaluation outputs
+│   ├── Auc\_curves/              # ROC/AUC curves for models
+│   ├── confusion\_matrices/      # Confusion matrix plots
+│   ├── evaluation\_metrices\_table/ # Tables with accuracy, F1, AUC etc.
+│   └── top\_15\_features/         # SHAP / importance plots
+│
+├── src/                         # Source code for pipeline
+│   ├── evaluate.py              # Model evaluation scripts
+│   ├── preprocessing.py         # Data preprocessing pipeline
+│   ├── re                       # (check if placeholder, can remove)
+│   └── utils.py                 # Helper functions
+│
+├── Train/                       # Training-related scripts
+│   └── (model training files)
+│
+├── requirements.txt             # Python dependencies
+├── README.md                    # Project documentation
+└── .gitignore                   # Ignored files
 
 ````
 
@@ -50,8 +62,8 @@ Credit\_Risk\_Prediction/
 
 ### 1. Clone Repository
 ```bash
-git clone https://github.com/your-username/Credit_Risk_Prediction.git
-cd Credit_Risk_Prediction
+git clone https://github.com/your-username/Credit-Risk-Prediction.git
+cd Credit-Risk-Prediction
 ````
 
 ### 2. Install Dependencies
@@ -60,12 +72,25 @@ cd Credit_Risk_Prediction
 pip install -r requirements.txt
 ```
 
-### 3. Run Notebooks
+### 3. Run Training & Evaluation
 
-* **Data Preprocessing** → notebooks/1\_data\_preprocessing.ipynb
-* **Feature Engineering & Selection** → notebooks/2\_feature\_engineering.ipynb
-* **Model Training** → notebooks/3\_model\_training.ipynb
-* **Evaluation** → notebooks/4\_evaluation.ipynb
+* **Preprocessing**
+
+  ```bash
+  python src/preprocessing.py
+  ```
+* **Model Training (inside Train/)**
+
+  ```bash
+  python Train/train_model.py
+  ```
+* **Evaluation**
+
+  ```bash
+  python src/evaluate.py
+  ```
+
+Outputs (confusion matrices, AUC curves, metrics tables, SHAP features) will be saved in the **`outputs/`** folder.
 
 ---
 
@@ -73,32 +98,38 @@ pip install -r requirements.txt
 
 ### Models Compared
 
+* Logistic Regression
 * Decision Tree
 * Random Forest
-* Gradient Boosting
 * XGBoost
 * LightGBM
 * CatBoost
 
-### Best Model
+### Example Metrics
 
-* **Random Forest with Hybrid Feature Selection**
-* **AUC-ROC**: 0.9131
-* **F1-Score**: 0.8213
+* **Best Model**: Random Forest with hybrid feature selection
+* **AUC**: 0.91
+* **F1-score**: 0.82
 
 ---
 
 ## 📈 Results & Visualizations
 
-* **Class Distribution** (default vs. non-default)
-* **SHAP Values** for feature importance & explainability
-* **Confusion Matrix** for model predictions
-* **ROC Curve** to measure classification performance
+* Confusion Matrices → `outputs/confusion_matrices/`
+* ROC / AUC Curves → `outputs/Auc_curves/`
+* Feature Importance (Top 15) → `outputs/top_15_features/`
+* Evaluation Summary → `outputs/evaluation_metrices_table/`
 
 ---
 
-## 🔄 Future Improvements
+## 🔮 Future Work
 
-* Experiment with **deep learning models** (e.g., LSTM, TabNet).
-* Apply **cost-sensitive learning** to reduce false negatives.
-* Deploy as an **API** or **web dashboard** for real-time credit scoring.
+* Try **deep learning models** (TabNet, Autoencoders).
+* Add **cost-sensitive learning** to handle imbalanced data.
+* Deploy as a **FastAPI/Flask service** for real-time scoring.
+
+
+
+
+👉 Do you also want me to **regenerate `requirements.txt`** (scikit-learn, xgboost, catboost, shap, etc.) so anyone can set it up in one command?
+```
