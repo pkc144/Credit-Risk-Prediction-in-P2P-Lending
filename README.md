@@ -1,161 +1,104 @@
 
+# 📊 Credit Risk Prediction in P2P Lending
 
-### ✅ Final `README.md` (No License Section)
+## 📄 Overview
+This project implements a machine learning framework for **credit risk prediction** in Peer-to-Peer (P2P) lending. Using the **Bondora loan dataset (2012–2016)**, the system predicts whether a borrower is likely to **default** or **repay**.  
+The model assists lenders in making **data-driven lending decisions** and minimizing risk.
 
-```markdown
-# 🧠 Credit Risk Prediction using SHAP and Hybrid Feature Selection
+---
 
-This project presents an end-to-end machine learning pipeline to predict credit risk using ensemble models and explainable AI (SHAP).  
-It is part of the B.Tech major project titled:
+## ⚙ Features
+- **Data Preprocessing**: Cleaning, handling missing values, encoding categorical features.
+- **Class Imbalance Handling**: Applied oversampling & undersampling techniques to balance default vs. non-default loans.
+- **Feature Selection**: Hybrid approach using model-based feature importance and SHAP explainability.
+- **Model Training**: Comparative analysis of multiple ML models.
+- **Evaluation Metrics**: Accuracy, Precision, Recall, F1-score, AUC-ROC.
 
-**“Improving Default Prediction in Peer-to-Peer Lending with Feature Selection and Explainable ML Models”**  
-📍 Department of Computer Science, NIT Karnataka
+---
+
+## 🛠 Technologies Used
+- **Languages**: Python  
+- **Libraries**: Pandas, NumPy, Scikit-learn, XGBoost, LightGBM, CatBoost, Matplotlib, SHAP  
+- **Tools**: Jupyter Notebook, Google Colab  
 
 ---
 
 ## 📁 Project Structure
-
 ```
 
-CREDIT-RISK/
-├── data/
-│   └── Trainset.csv
-├── models/
-├── notebooks/
-├── outputs/
-│   ├── Auc\_curves/
-│   ├── confusion\_matrix/
-│   ├── evaluation\_metrics/
-│   └── top\_15\_features/
-├── src/
-│   ├── Train/
-│   │   ├── catboost\_basic.py
-│   │   ├── catboost\_shap.py
-│   │   ├── catboost\_shap\_union.py
-│   │   ├── decision\_tree\_basic.py
-│   │   ├── decision\_tree\_shap.py
-│   │   ├── decision\_tree\_shap\_union.py
-│   │   ├── gradient\_boost\_basic.py
-│   │   ├── gradient\_boost\_shap.py
-│   │   ├── gradient\_boost\_shap\_union.py
-│   │   ├── lightgbm\_basic.py
-│   │   ├── lightgbm\_shap.py
-│   │   ├── lightgbm\_shap\_union.py
-│   │   ├── random\_forest\_basic.py
-│   │   ├── random\_forest\_shap.py
-│   │   ├── random\_forest\_shap\_union.py
-│   │   ├── xgboost\_basic.py
-│   │   ├── xgboost\_shap.py
-│   │   ├── xgboost\_shap\_union.py
-│   ├── evaluate.py
+Credit\_Risk\_Prediction/
+│
+├── data/                 # Dataset files (Bondora loan dataset)
+├── notebooks/            # Jupyter Notebooks for each stage
+│   ├── 1\_data\_preprocessing.ipynb
+│   ├── 2\_feature\_engineering.ipynb
+│   ├── 3\_model\_training.ipynb
+│   └── 4\_evaluation.ipynb
+├── src/                  # Source code scripts
 │   ├── preprocessing.py
-│   └── utils.py
-├── README.md
-└── requirements.txt
+│   ├── models.py
+│   ├── utils.py
+│   └── feature\_selection.py
+├── results/              # Evaluation results, plots, SHAP explainability graphs
+└── README.md             # Project documentation
 
 ````
 
 ---
 
-## 🚀 Highlights
+## 🚀 Getting Started
 
-- ✅ SHAP-based interpretability for every model
-- ✅ Hybrid feature selection: SHAP + model-based
-- 🔁 Models implemented: XGBoost, LightGBM, Random Forest, CatBoost, Gradient Boost, Decision Tree
-- ⚡ Each model trained in 3 versions: `basic`, `shap`, `shap + union`
-- 📊 Outputs include: AUC curves, confusion matrices, feature importance
+### 1. Clone Repository
+```bash
+git clone https://github.com/your-username/Credit_Risk_Prediction.git
+cd Credit_Risk_Prediction
+````
 
----
+### 2. Install Dependencies
 
-## 💻 How to Run
-
-### 1️⃣ Install Dependencies
 ```bash
 pip install -r requirements.txt
-````
-
-### 2️⃣ Run Preprocessing
-
-```bash
-python src/preprocessing.py
 ```
 
-### 3️⃣ Train Any Model (Examples)
+### 3. Run Notebooks
 
-```bash
-# XGBoost
-python src/Train/xgboost_basic.py
-python src/Train/xgboost_shap.py
-python src/Train/xgboost_shap_union.py
-
-# LightGBM
-python src/Train/lightgbm_basic.py
-python src/Train/lightgbm_shap.py
-python src/Train/lightgbm_shap_union.py
-
-# Random Forest
-python src/Train/random_forest_basic.py
-python src/Train/random_forest_shap.py
-python src/Train/random_forest_shap_union.py
-
-# CatBoost
-python src/Train/catboost_basic.py
-python src/Train/catboost_shap.py
-python src/Train/catboost_shap_union.py
-
-# Gradient Boost
-python src/Train/gradient_boost_basic.py
-python src/Train/gradient_boost_shap.py
-python src/Train/gradient_boost_shap_union.py
-
-# Decision Tree
-python src/Train/decision_tree_basic.py
-python src/Train/decision_tree_shap.py
-python src/Train/decision_tree_shap_union.py
-```
-
-### 4️⃣ Evaluate Results
-
-```bash
-python src/evaluate.py
-```
-
-### 5️⃣ Check Outputs
-
-All results are saved inside the `outputs/` folder:
-
-* Confusion matrices
-* AUC curves
-* SHAP plots
-* Evaluation metric tables
-* Top 15 features (text)
+* **Data Preprocessing** → notebooks/1\_data\_preprocessing.ipynb
+* **Feature Engineering & Selection** → notebooks/2\_feature\_engineering.ipynb
+* **Model Training** → notebooks/3\_model\_training.ipynb
+* **Evaluation** → notebooks/4\_evaluation.ipynb
 
 ---
 
-## 🧪 Output Samples
+## 📊 Model Evaluation
 
-### 📊 Evaluation Table
+### Models Compared
 
-![Evaluation Table](outputs/evaluation_metrics/evaluation_metrics_table.png)
+* Decision Tree
+* Random Forest
+* Gradient Boosting
+* XGBoost
+* LightGBM
+* CatBoost
 
-### 🌀 Confusion Matrix Example
+### Best Model
 
-![Confusion Matrix](outputs/confusion_matrix/xgboost_confusion_matrix.png)
-
----
-
-## 📚 Requirements
-
-Common packages used (in `requirements.txt`):
-
-* `scikit-learn`
-* `xgboost`, `lightgbm`, `catboost`
-* `shap`
-* `matplotlib`, `seaborn`, `pandas`, `numpy`
+* **Random Forest with Hybrid Feature Selection**
+* **AUC-ROC**: 0.9131
+* **F1-Score**: 0.8213
 
 ---
 
-## 🙋‍♂️ Author
+## 📈 Results & Visualizations
 
-**Prince Kumar Chaudhary**
-📍 B.Tech – Computer Science, NITK Surathkal
+* **Class Distribution** (default vs. non-default)
+* **SHAP Values** for feature importance & explainability
+* **Confusion Matrix** for model predictions
+* **ROC Curve** to measure classification performance
+
+---
+
+## 🔄 Future Improvements
+
+* Experiment with **deep learning models** (e.g., LSTM, TabNet).
+* Apply **cost-sensitive learning** to reduce false negatives.
+* Deploy as an **API** or **web dashboard** for real-time credit scoring.
