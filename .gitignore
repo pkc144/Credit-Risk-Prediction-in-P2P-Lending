@@ -33,3 +33,6 @@ reports/figures/evaluation_metrics/evaluation_metrics.csv
 
 # Logs
 *.log
+
+# CatBoost training artifacts
+catboost_info/

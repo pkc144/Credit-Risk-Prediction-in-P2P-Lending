@@ -34,11 +34,18 @@ def stratified_split(
 def balance_classes(
     X: pd.DataFrame, y: pd.Series, method: str = "oversample", random_state: int = 42
 ) -> tuple[pd.DataFrame, pd.Series]:
-    """Quick majority/minority resampler — no extra dependency on imbalanced-learn."""
+    """Quick binary resampler — no extra dependency on imbalanced-learn.
+
+    No-ops if the dataset already has at most one class or is exactly balanced.
+    """
+    counts = y.value_counts()
+    if len(counts) < 2 or counts.iloc[0] == counts.iloc[-1]:
+        return X.reset_index(drop=True), y.reset_index(drop=True).astype(int)
+
     df = X.copy()
     df["__y"] = y.values
-    majority_label = df["__y"].value_counts().idxmax()
-    minority_label = df["__y"].value_counts().idxmin()
+    majority_label = counts.idxmax()
+    minority_label = counts.idxmin()
     majority = df[df["__y"] == majority_label]
     minority = df[df["__y"] == minority_label]
 

@@ -30,9 +30,15 @@ def preprocess_data(
     df.drop(columns=LEAKY_COLUMNS, inplace=True, errors="ignore")
     print(f"Dropped leaky columns: {LEAKY_COLUMNS}")
 
+    empty_cols = [c for c in df.columns if df[c].isna().all()]
+    if empty_cols:
+        df.drop(columns=empty_cols, inplace=True)
+        print(f"Dropped fully-empty columns: {empty_cols}")
+
     for col in df.columns:
         if df[col].dtype == "object":
-            df[col] = df[col].fillna(df[col].mode()[0])
+            mode = df[col].mode()
+            df[col] = df[col].fillna(mode.iloc[0] if not mode.empty else "")
         elif col != target_col:
             df[col] = df[col].fillna(df[col].mean())
     print("Missing values handled")
