@@ -74,11 +74,15 @@ Credit-Risk-Prediction-in-P2P-Lending/
 
 ### 1. Clone & set up
 ```bash
-git clone https://github.com/<your-user>/Credit-Risk-Prediction-in-P2P-Lending.git
+git clone https://github.com/pkc144/Credit-Risk-Prediction-in-P2P-Lending.git
 cd Credit-Risk-Prediction-in-P2P-Lending
 python -m venv .venv && source .venv/bin/activate   # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
 ```
+
+> **macOS note**: XGBoost and LightGBM require OpenMP. If `import xgboost`
+> fails with `Library not loaded: libomp.dylib`, install it via Homebrew:
+> `brew install libomp`.
 
 ### 2. Preprocess the raw data
 ```bash
@@ -113,6 +117,7 @@ All plots and the metrics table land under `reports/figures/`.
 
 1. **Preprocessing** (`src/data/preprocessing.py`)
    - Drop ID/leaky columns (`UserName`, `LoanNumber`, `PrincipalBalance`, `Status`)
+   - Drop fully-empty columns (e.g. `EmploymentPosition`)
    - Mode-fill object columns, mean-fill numeric columns
    - `LabelEncoder` on categoricals
    - Winsorise numeric columns at the 0.1% / 99.9% quantiles
@@ -143,9 +148,23 @@ All plots and the metrics table land under `reports/figures/`.
 ---
 
 ## Results
-Pre-generated reference plots from a previous run are checked in under
-`reports/figures/`. Re-running `python -m src.models.train` overwrites them
-with fresh artifacts and writes an `evaluation_metrics.csv` summary table.
+
+Latest run on the cleaned 24,000-row dataset (80/20 stratified split, top-15
+features by built-in importance refit):
+
+| Model        | Accuracy | Precision | Recall | F1     | AUC    |
+|--------------|----------|-----------|--------|--------|--------|
+| LogReg       | 0.6987   | 0.6968    | 0.7037 | 0.7002 | 0.7646 |
+| DecisionTree | 0.7583   | 0.7329    | 0.8129 | 0.7708 | 0.7583 |
+| **RandomForest** | **0.8117** | **0.7829** | **0.8625** | **0.8208** | **0.9131** |
+| XGBoost      | 0.7598   | 0.7291    | 0.8267 | 0.7748 | 0.8373 |
+| LightGBM     | 0.7608   | 0.7234    | 0.8446 | 0.7793 | 0.8388 |
+| CatBoost     | 0.7573   | 0.7291    | 0.8187 | 0.7713 | 0.8363 |
+
+Best model: **Random Forest** (AUC 0.913, F1 0.821). Plots for every model
+are checked in under `reports/figures/`; re-running
+`python -m src.models.train` overwrites them and rewrites
+`evaluation_metrics.csv`.
 
 ---
 
